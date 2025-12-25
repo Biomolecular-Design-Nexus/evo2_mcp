@@ -1,0 +1,59 @@
+{
+  "_description": "Configuration for phage genome design",
+  "_source": "Extracted from examples/use_case_4_phage_genome_design.py",
+
+  "model": {
+    "name": "evo2_7b",
+    "alternatives": ["evo2_1b", "evo2_7b", "evo2_40b"],
+    "device": "cuda"
+  },
+
+  "design": {
+    "num_designs": 5,
+    "target_length": 5000,
+    "mutation_rate": 0.1,
+    "use_reference_scaffold": true
+  },
+
+  "generation_params": {
+    "temperature": 1.2,
+    "top_k": 8,
+    "window_size": 1024,
+    "batch_size": 1
+  },
+
+  "filter_criteria": {
+    "min_length": 1000,
+    "max_length": 10000,
+    "min_gc_content": 20,
+    "max_gc_content": 80,
+    "max_n_content": 5,
+    "apply_filters": true
+  },
+
+  "input_formats": {
+    "supported_extensions": [".fasta", ".fa", ".fna"],
+    "require_reference": true
+  },
+
+  "output": {
+    "format": "fasta",
+    "include_filtered_only": false,
+    "include_metrics": true,
+    "header_prefix": "designed_phage_"
+  },
+
+  "analysis": {
+    "compare_to_reference": true,
+    "calculate_diversity": true,
+    "assess_viability": false
+  },
+
+  "mock_mode": {
+    "enabled": true,
+    "description": "Use CPU-only mock implementation when GPU unavailable",
+    "seed": 42,
+    "mutation_based": true,
+    "preserve_structure": true
+  }
+}

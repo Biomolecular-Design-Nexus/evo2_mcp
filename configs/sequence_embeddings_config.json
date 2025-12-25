@@ -1,0 +1,53 @@
+{
+  "_description": "Configuration for DNA sequence embeddings extraction",
+  "_source": "Extracted from examples/use_case_3_sequence_embeddings.py",
+
+  "model": {
+    "name": "evo2_7b",
+    "alternatives": ["evo2_1b", "evo2_7b", "evo2_40b"],
+    "device": "cuda"
+  },
+
+  "embedding": {
+    "layer_name": "blocks.26",
+    "embedding_dims": {
+      "evo2_1b": 2048,
+      "evo2_7b": 2560,
+      "evo2_40b": 5120
+    },
+    "use_final_token": true,
+    "max_length": 2048
+  },
+
+  "processing": {
+    "batch_size": 8,
+    "max_sequences": 1000,
+    "truncate_long_sequences": true
+  },
+
+  "input_formats": {
+    "supported_extensions": [".csv", ".tsv", ".fasta", ".fa", ".fna", ".txt"],
+    "sequence_columns": ["sequence", "seq", "dna", "Sequence", "DNA"],
+    "id_columns": ["id", "name", "header", "description"]
+  },
+
+  "output": {
+    "format": "csv",
+    "include_sequence": true,
+    "include_metadata": true,
+    "embedding_prefix": "embedding_"
+  },
+
+  "downstream_tasks": {
+    "classification_enabled": false,
+    "clustering_enabled": false,
+    "similarity_search_enabled": false
+  },
+
+  "mock_mode": {
+    "enabled": true,
+    "description": "Use CPU-only mock implementation when GPU unavailable",
+    "seed": 42,
+    "realistic_embeddings": true
+  }
+}

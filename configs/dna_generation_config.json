@@ -1,0 +1,35 @@
+{
+  "_description": "Configuration for DNA sequence generation",
+  "_source": "Extracted from examples/use_case_1_dna_generation.py",
+
+  "model": {
+    "name": "evo2_7b",
+    "alternatives": ["evo2_1b", "evo2_7b", "evo2_40b"],
+    "device": "cuda"
+  },
+
+  "generation": {
+    "n_tokens": 100,
+    "temperature": 1.0,
+    "top_k": 4,
+    "batch_size": 1
+  },
+
+  "species_support": {
+    "enabled": true,
+    "default_species": null,
+    "examples": ["Homo sapiens", "Escherichia coli", "Saccharomyces cerevisiae"]
+  },
+
+  "output": {
+    "format": "fasta",
+    "include_metadata": true,
+    "include_statistics": true
+  },
+
+  "mock_mode": {
+    "enabled": true,
+    "description": "Use CPU-only mock implementation when GPU unavailable",
+    "seed": 42
+  }
+}

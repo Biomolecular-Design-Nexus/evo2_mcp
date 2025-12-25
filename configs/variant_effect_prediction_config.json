@@ -1,0 +1,65 @@
+{
+  "_description": "Configuration for variant effect prediction",
+  "_source": "Extracted from examples/use_case_2_variant_effect_prediction.py",
+
+  "model": {
+    "name": "evo2_7b",
+    "alternatives": ["evo2_1b", "evo2_7b", "evo2_40b"],
+    "device": "cuda"
+  },
+
+  "processing": {
+    "window_size": 512,
+    "batch_size": 32,
+    "max_variants": 10000
+  },
+
+  "scoring": {
+    "pathogenicity_threshold": -0.5,
+    "confidence_threshold": 0.1,
+    "score_type": "delta_likelihood"
+  },
+
+  "input_formats": {
+    "supported_extensions": [".csv", ".xlsx", ".tsv"],
+    "required_columns": ["position", "ref", "alt"],
+    "optional_columns": ["id", "gene", "consequence"],
+    "column_aliases": {
+      "position": ["pos", "Position", "start", "genomic_position"],
+      "ref": ["reference", "ref_allele", "REF"],
+      "alt": ["alternative", "alt_allele", "ALT"]
+    }
+  },
+
+  "reference": {
+    "default_file": "examples/data/NC_001422_1.fna",
+    "format": "fasta",
+    "required": false
+  },
+
+  "output": {
+    "format": "csv",
+    "include_original_columns": true,
+    "columns": [
+      "position",
+      "ref_allele",
+      "alt_allele",
+      "delta_likelihood",
+      "prediction",
+      "confidence"
+    ]
+  },
+
+  "classification": {
+    "pathogenic_label": "Pathogenic",
+    "benign_label": "Benign",
+    "uncertain_label": "Uncertain"
+  },
+
+  "mock_mode": {
+    "enabled": true,
+    "description": "Use CPU-only mock implementation when GPU unavailable",
+    "seed": 42,
+    "realistic_scoring": true
+  }
+}

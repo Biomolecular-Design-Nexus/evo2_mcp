@@ -1,0 +1,251 @@
+{
+  "project_name": "evo2",
+  "description": "A comprehensive MCP (Model Context Protocol) server for DNA sequence analysis using the Evo2 foundation model",
+  "validation_date": "2025-12-24",
+  "mcp_server_tools": 15,
+  "scripts_count": 5,
+  "tools": [
+    {
+      "name": "generate_dna_sequences",
+      "type": "sync",
+      "description": "Generate DNA sequences from prompts using Evo2 models",
+      "example_prompt": "Use generate_dna_sequences with prompts [\"ACGT\", \"ATCG\"] and tokens 50"
+    },
+    {
+      "name": "predict_variant_effects",
+      "type": "sync",
+      "description": "Predict variant pathogenicity effects for small variant sets",
+      "example_prompt": "Use predict_variant_effects with variants_file @examples/data/41586_2018_461_MOESM3_ESM.xlsx"
+    },
+    {
+      "name": "score_sequences",
+      "type": "sync",
+      "description": "Score DNA sequences for quality assessment",
+      "example_prompt": "Use score_sequences with sequences_file @examples/data/NC_001422_1.fna"
+    },
+    {
+      "name": "submit_dna_generation",
+      "type": "submit",
+      "description": "Submit DNA sequence generation for background processing",
+      "example_prompt": "Use submit_dna_generation with prompts [\"ACGTACGT\"] and tokens 1000"
+    },
+    {
+      "name": "submit_variant_effect_prediction",
+      "type": "submit",
+      "description": "Submit variant effect prediction for large variant sets",
+      "example_prompt": "Use submit_variant_effect_prediction with variants_file \"large_variants.csv\""
+    },
+    {
+      "name": "submit_sequence_embeddings",
+      "type": "submit",
+      "description": "Submit sequence embeddings extraction for background processing",
+      "example_prompt": "Use submit_sequence_embeddings with sequences_file \"large_dataset.fasta\""
+    },
+    {
+      "name": "submit_sequence_scoring",
+      "type": "submit",
+      "description": "Submit large-scale sequence scoring for background processing",
+      "example_prompt": "Use submit_sequence_scoring with sequences_file \"genome_sequences.fasta\""
+    },
+    {
+      "name": "submit_phage_genome_design",
+      "type": "submit",
+      "description": "Submit novel phage genome design for background processing",
+      "example_prompt": "Use submit_phage_genome_design with reference_file \"phage_ref.fasta\" and num_designs 10"
+    },
+    {
+      "name": "submit_batch_dna_generation",
+      "type": "submit",
+      "description": "Submit batch DNA generation for multiple prompt files",
+      "example_prompt": "Use submit_batch_dna_generation with prompt_files [\"file1.txt\", \"file2.txt\"]"
+    },
+    {
+      "name": "submit_batch_sequence_analysis",
+      "type": "submit",
+      "description": "Submit batch sequence analysis for multiple files",
+      "example_prompt": "Use submit_batch_sequence_analysis with sequence_files [\"file1.fasta\", \"file2.fasta\"]"
+    },
+    {
+      "name": "get_job_status",
+      "type": "management",
+      "description": "Get the status of a submitted job",
+      "example_prompt": "Use get_job_status with job_id \"abc123\""
+    },
+    {
+      "name": "get_job_result",
+      "type": "management",
+      "description": "Get the results of a completed job",
+      "example_prompt": "Use get_job_result with job_id \"abc123\""
+    },
+    {
+      "name": "get_job_log",
+      "type": "management",
+      "description": "Get log output from a running or completed job",
+      "example_prompt": "Use get_job_log with job_id \"abc123\" and tail 50"
+    },
+    {
+      "name": "cancel_job",
+      "type": "management",
+      "description": "Cancel a running job",
+      "example_prompt": "Use cancel_job with job_id \"abc123\""
+    },
+    {
+      "name": "list_jobs",
+      "type": "management",
+      "description": "List all submitted jobs",
+      "example_prompt": "Use list_jobs with status \"running\""
+    }
+  ],
+  "scripts": [
+    {
+      "name": "dna_generation.py",
+      "description": "DNA sequence generation and autocompletion using Evo2 models",
+      "example_command": "python scripts/dna_generation.py --prompts ACGT,ATCG --tokens 100 --output sequences.fasta"
+    },
+    {
+      "name": "variant_effect_prediction.py",
+      "description": "Zero-shot variant effect prediction using Evo2 models",
+      "example_command": "python scripts/variant_effect_prediction.py --variants examples/data/41586_2018_461_MOESM3_ESM.xlsx --output predictions.csv"
+    },
+    {
+      "name": "sequence_scoring.py",
+      "description": "DNA sequence likelihood scoring and quality assessment",
+      "example_command": "python scripts/sequence_scoring.py --sequences examples/data/NC_001422_1.fna --normalize --output scores.csv"
+    },
+    {
+      "name": "sequence_embeddings.py",
+      "description": "DNA sequence embeddings extraction for downstream ML tasks",
+      "example_command": "python scripts/sequence_embeddings.py --sequences examples/data/NC_001422_1.fna --layer blocks.26 --output embeddings.csv"
+    },
+    {
+      "name": "phage_genome_design.py",
+      "description": "Novel bacteriophage genome design and filtering",
+      "example_command": "python scripts/phage_genome_design.py --reference examples/data/NC_001422_1.fna --num-designs 5 --length 5000 --output designs.fasta"
+    }
+  ],
+  "demo_data": [
+    {
+      "file": "41586_2018_461_MOESM3_ESM.xlsx",
+      "size": "2.3MB",
+      "description": "BRCA1 variant dataset from Findlay et al.",
+      "used_by": ["variant_effect_prediction"]
+    },
+    {
+      "file": "NC_001422_1.fna",
+      "size": "5.5KB",
+      "description": "PhiX174 complete genome",
+      "used_by": ["sequence_scoring", "sequence_embeddings", "phage_genome_design"]
+    },
+    {
+      "file": "NC_001422.1_Gprotein.fasta",
+      "size": "212B",
+      "description": "PhiX174 spike protein sequence",
+      "used_by": ["sequence_scoring"]
+    },
+    {
+      "file": "NC_001422.1_pseudocircular.gff",
+      "size": "7.2KB",
+      "description": "PhiX174 genome annotations",
+      "used_by": ["structural_analysis"]
+    },
+    {
+      "file": "prompts.csv",
+      "size": "27KB",
+      "description": "Sample DNA sequence prompts",
+      "used_by": ["dna_generation"]
+    },
+    {
+      "file": "samplePositions.tsv",
+      "size": "2MB",
+      "description": "Exon classifier sample data",
+      "used_by": ["sequence_embeddings"]
+    }
+  ],
+  "configs": [
+    {
+      "file": "dna_generation_config.json",
+      "description": "DNA generation settings",
+      "parameters": {
+        "model": "Model selection and device",
+        "generation": "Token count, temperature, top_k",
+        "species_support": "Phylogenetic context options",
+        "output": "Format and metadata options"
+      }
+    },
+    {
+      "file": "variant_effect_prediction_config.json",
+      "description": "Variant prediction settings",
+      "parameters": {
+        "processing": "Window size and batch processing",
+        "scoring": "Pathogenicity thresholds and score types",
+        "input_formats": "Supported file extensions"
+      }
+    },
+    {
+      "file": "sequence_embeddings_config.json",
+      "description": "Embeddings extraction settings",
+      "parameters": {
+        "embedding": "Layer selection and sequence length limits",
+        "processing": "Batch sizes and sequence limits",
+        "output": "Format and embedding prefixes"
+      }
+    },
+    {
+      "file": "sequence_scoring_config.json",
+      "description": "Sequence scoring settings",
+      "parameters": {
+        "scoring": "Window parameters and normalization",
+        "input_formats": "Supported file types",
+        "output": "Statistics and sequence inclusion"
+      }
+    },
+    {
+      "file": "phage_genome_design_config.json",
+      "description": "Phage design settings",
+      "parameters": {
+        "design": "Target constraints and mutation rates",
+        "generation_params": "Temperature and sampling parameters",
+        "filter_criteria": "Length and GC content limits"
+      }
+    }
+  ],
+  "installation": {
+    "environment": "./env",
+    "python_version": "3.10+",
+    "package_manager": "mamba (preferred) or conda",
+    "key_dependencies": [
+      "fastmcp",
+      "loguru",
+      "pandas",
+      "numpy",
+      "openpyxl",
+      "biopython"
+    ],
+    "mcp_installation_options": [
+      "fastmcp install src/server.py --name evo2",
+      "claude mcp add evo2 -- $(pwd)/env/bin/python $(pwd)/src/server.py",
+      "Manual configuration in ~/.claude/settings.json"
+    ]
+  },
+  "validation_results": {
+    "scripts_tested": [
+      {
+        "script": "dna_generation.py",
+        "status": "passed",
+        "test_command": "python scripts/dna_generation.py --prompts ACGT --tokens 10",
+        "output": "Generated 10bp sequence successfully in mock mode"
+      },
+      {
+        "script": "sequence_scoring.py",
+        "status": "passed",
+        "test_command": "python scripts/sequence_scoring.py --sequences examples/data/NC_001422.1_Gprotein.fasta",
+        "output": "Generated likelihood scores for protein sequence"
+      }
+    ],
+    "file_structure_verified": true,
+    "demo_data_present": true,
+    "configs_present": true,
+    "mcp_tools_count": 15,
+    "readme_comprehensive": true
+  }
+}

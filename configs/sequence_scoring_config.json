@@ -1,0 +1,51 @@
+{
+  "_description": "Configuration for DNA sequence likelihood scoring",
+  "_source": "Extracted from examples/use_case_5_sequence_scoring.py",
+
+  "model": {
+    "name": "evo2_7b",
+    "alternatives": ["evo2_1b", "evo2_7b", "evo2_40b"],
+    "device": "cuda"
+  },
+
+  "scoring": {
+    "window_size": 1024,
+    "stride": 512,
+    "batch_size": 4,
+    "score_type": "likelihood",
+    "normalize_scores": false
+  },
+
+  "input_formats": {
+    "supported_extensions": [".fasta", ".fa", ".fna", ".txt", ".csv"],
+    "auto_detect_format": true
+  },
+
+  "output": {
+    "format": "csv",
+    "include_sequence": true,
+    "include_statistics": true,
+    "columns": [
+      "header",
+      "sequence",
+      "likelihood_score",
+      "length",
+      "gc_content",
+      "n_content"
+    ]
+  },
+
+  "analysis": {
+    "calculate_statistics": true,
+    "show_top_bottom": 3,
+    "score_distribution": true
+  },
+
+  "mock_mode": {
+    "enabled": true,
+    "description": "Use CPU-only mock implementation when GPU unavailable",
+    "seed": 42,
+    "realistic_scoring": true,
+    "gc_content_bias": true
+  }
+}
